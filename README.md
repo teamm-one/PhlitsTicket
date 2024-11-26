@@ -1,4 +1,4 @@
-# <p align="center"><ins><b><i>Sprint Number : 1</i></b></ins></p>
+# <p align="center"> <ins><b>Sprint Number: 1</b></ins> </p>
 ### Eslam :
 * `architecture` =>Done
 
