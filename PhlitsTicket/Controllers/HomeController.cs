@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using PhlitsTicket.Models;
+using Models.ViewModels;
 using System.Diagnostics;
 
 namespace PhlitsTicket.Controllers

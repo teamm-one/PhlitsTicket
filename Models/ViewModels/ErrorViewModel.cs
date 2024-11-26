@@ -1,4 +1,4 @@
-namespace PhlitsTicket.Models
+namespace Models.ViewModels
 {
     public class ErrorViewModel
     {
