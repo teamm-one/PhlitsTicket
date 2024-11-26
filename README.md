@@ -1,11 +1,11 @@
 # 	<ins> ***Sprint Number***(1) </ins>
-### eslam :
+### Eslam :
 * `architecture` =>Done
 
 * `install pakges` =>Done
 
 * `create reposatoreies for models` =>
-### serag :
+### Serag :
 * `erd` =>
 
 * `create dataBasa with all models ` =>
