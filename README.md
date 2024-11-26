@@ -4,7 +4,7 @@
 
 * `install pakges` =>Done
 
-* `create reposatoreies for models` =>
+* `create reposatoreies and iRposatories for models` =>
 ### Serag :
 * `erd` =>
 
