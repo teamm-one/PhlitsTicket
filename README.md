@@ -3,7 +3,7 @@
 * `architecture` =>Done
 
 * `install pakges` =>Done
-
+* `identity freamework` =>Done
 * `create reposatoreies and iRposatories for models` =>
 ### Serag :
 * `erd` =>
@@ -16,4 +16,4 @@
 * `create base rebo` =>
 
 ### Fares :
-* `identity freamework` =>
+* `dont have any task now..!`
