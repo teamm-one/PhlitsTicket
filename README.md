@@ -4,6 +4,7 @@
 
 * `install pakges` =>Done
 * `identity freamework` =>Done
+* `restyle home page` =>
 * `create reposatoreies and iRposatories for models` =>
 ### Serag :
 * `erd` =>
