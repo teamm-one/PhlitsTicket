@@ -12,10 +12,13 @@ namespace PhlitsTicket
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+
             //DbContext
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
             options.UseSqlServer(builder.Configuration.GetConnectionString("DeafultConnection")));
+
             //builder.services.addscoped
+
                 //1-Configure Identity User&Roles
             builder.Services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();
 
