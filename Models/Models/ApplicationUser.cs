@@ -10,7 +10,7 @@ namespace Models.Models
     
     public class ApplicationUser:IdentityUser
     {
-       // public int  MyProperty { get; set; }
+       
         public string? ImgUrl { get; set; }
         public string? PhoneNumber {  get; set; }
         public StaticData UserType {  get; set; }
