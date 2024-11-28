@@ -1,4 +1,4 @@
-﻿namespace TaYaRa.Models
+﻿namespace Models.Models
 {
     public class Booking
     {
