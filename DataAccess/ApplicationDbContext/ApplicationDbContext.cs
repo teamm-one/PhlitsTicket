@@ -3,14 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Models.Models;
 namespace DataAccess.ApplicationDbContext
 {
-    internal class ApplicationDbContext:DbContext
+    public class ApplicationDbContext:IdentityDbContext<ApplicationUser>
     {
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            base.OnConfiguring(optionsBuilder);
+       public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { 
+        
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
