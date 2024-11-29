@@ -3,29 +3,45 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - PhlitsTicket</title>
+    <title>@ViewData["Title"]</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="icon" href="/assets/icon.png" type="image/ico" />
+    @* fonts *@
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    @* fontAwsem *@
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="~/PhlitsTicket.styles.css" asp-append-version="true" />
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border mb-3">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">PhlitsTicket</a>
+                <a class="navbar-brand fs-19 me-1 fw-600 ms-2 border-end pe-3 border-2 border-dark" asp-area="" asp-controller="Home" asp-action="Index">Airplane<img src="~/assets/travel_airplane_1740.png" class="ms-2" style="width:32px" alt="Alternate Text" /></a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
+                    <ul class="navbar-nav flex-grow-1 gap-1 align-items-center ms-2">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link items-hover fs-15 fw-600 text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link items-hover fs-15 fw-600 text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
                     </ul>
+                    <div class="dropdown nav-dropdowen me-4">
+                        <a class="btn text-dark py-0 fw-600 d-flex align-items-center dropdown-toggle border-0" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="~/assets/users/download.png" class="avatar" alt="Alternate Text" />
+                            <span class="mx-1">Gust</span>
+                        </a>
+
+                        <ul class="dropdown-menu ">
+                            <li><a class="dropdown-item text-dark ps-2" href="#"><i class="fa-solid fa-arrow-right-to-bracket me-2"></i>sign in</a></li>
+                            <li><a class="dropdown-item text-dark ps-2" href="#"><i class="fa-solid fa-user-plus me-2"></i>sign up</a></li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </nav>
