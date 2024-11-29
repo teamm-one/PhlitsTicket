@@ -4,49 +4,85 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DataAccess.IRepos;
-using DataAccess.ApplicationDbContext;
+using DataAccess.Data;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace DataAccess.Repos
 {
-    internal class BaseRepo<T> : IBaseRepo<T> where T : class
+    public class BaseRepo<T> : IBaseRepo<T> where T : class
     {
-        private readonly DbContext _context;
-        public BaseRepo(DbContext context)
+        ApplicationDbContext _context;
+        DbSet<T> _model;
+        public BaseRepo(ApplicationDbContext context)
         {
             _context = context;
+            _model = _context.Set<T>();
         }
-
-        IEnumerable<T> IBaseRepo<T>.GetAll()
+        public IEnumerable<T> GetAll(Expression<Func<T, object>>[]? includes = null,
+            Expression<Func<T, bool>>? expression = null,
+            Func<IQueryable<T>, IQueryable<T>>? additionalIncludes = null)
         {
-           return _context.Set<T>().ToList();
+            var query = _model.AsQueryable();
+            if (includes != null && includes.Length > 0)
+            {
+                foreach (var include in includes)
+                {
+                    query = query.Include(include);
+                }
+            }
+            if (expression != null)
+            {
+                query = query.Where(expression);
+            }
+            if (additionalIncludes != null)
+            {
+                query = additionalIncludes(query);
+            }
+            return query;
         }
-
-        T IBaseRepo<T>.GetById(int id)
+        public T? GetOne(Expression<Func<T, bool>> expression, Expression<Func<T, object>>[]? includes = null
+            ,
+            Func<IQueryable<T>, IQueryable<T>>? additionalIncludes = null)
         {
-            return _context.Set<T>().Find(id);
+            var query = _model.AsQueryable();
+            if (query != null)
+            {
+                if (includes != null && includes.Length > 0)
+                {
+                    foreach (var include in includes)
+                    {
+                        query = query.Include(include);
+                    }
+                }
+                if (additionalIncludes != null)
+                {
+                    query = additionalIncludes(query);
+                }
+            }
+            return query?.FirstOrDefault(expression);
         }
-
-        void IBaseRepo<T>.Create(T entity)
-        { 
-               _context.Set<T>().Add(entity);
-              _context.SaveChanges();
-        }
-
-    
-
-        void IBaseRepo<T>.Edit(T entity)
+        public void Create(T item)
         {
-            _context.Set<T>().Update(entity);
+            _model.Add(item);
         }
-
-        void IBaseRepo<T>.Delete(int id)
+        public void Edit(T entity)
         {
-            var entity = _context.Set<T>().Find(id);
-            _context.Set<T>().Remove(entity);
+            _model.Update(entity);
+        }
+        public void commit()
+        {
             _context.SaveChanges();
         }
-
-       
+        public bool Delete(int id)
+        {
+            var item = _model.Find(id);
+            if (item != null)
+            {
+                _model.Remove(item);
+                return true;
+            }
+            return false;
+        }
     }
 }

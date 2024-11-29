@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Models.Models;
-namespace DataAccess.ApplicationDbContext
+namespace DataAccess.Data
 {
     public class ApplicationDbContext:IdentityDbContext<ApplicationUser>
     {

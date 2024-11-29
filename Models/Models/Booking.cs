@@ -9,7 +9,7 @@
         public int SeatID { get; set; }
         public string Status { get; set; }
 
-        public User User { get; set; }
+        public ApplicationUser User { get; set; }
         public Flight Flight { get; set; }
         public Seat Seat { get; set; }
         public Payment Payment { get; set; }
