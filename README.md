@@ -9,12 +9,12 @@
 ### Serag :
 * `erd` =>
 
-* `create dataBasa with all models ` =>
+* `create dataBasa with all models ` =>Done
 
 
 ### Ahmed :
 
-* `create base rebo` =>
+* `create base rebo` =>Done
 
 ### Fares :
-* `dont have any task now..!`
+* `make controller for user` =>
