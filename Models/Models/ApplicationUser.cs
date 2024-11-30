@@ -15,5 +15,6 @@ namespace Models.Models
         public string? PhoneNumber {  get; set; }
         public StaticData UserType { get; set; }
         public string? PassborNumber { get; set; }
+        public ICollection<Booking> Bookings { get; set; }
     }
 }

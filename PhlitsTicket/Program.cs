@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Models.Models;
-using DataAccess.ApplicationDbContext;
+using DataAccess.Data;
 using Microsoft.EntityFrameworkCore;
 namespace PhlitsTicket
 {
