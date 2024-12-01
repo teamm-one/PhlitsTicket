@@ -7,7 +7,7 @@
 * `restyle home page` =>
 * `create reposatoreies and iRposatories for models` =>
 ### Serag :
-* `erd` =>
+* `erd` =>Done
 
 * `create dataBasa with all models ` =>Done
 
@@ -17,4 +17,3 @@
 * `create base rebo` =>Done
 
 ### Fares :
-* `make controller for user` =>
