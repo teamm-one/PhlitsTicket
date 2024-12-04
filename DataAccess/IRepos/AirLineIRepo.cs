@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DataAccess.IRepos
 {
-    public interface AirLineIRepo:IBaseRepo<Airline>;
+    public interface AirLineIRepo:IBaseRepo<Airline>
     {
     }
 }

@@ -4,7 +4,7 @@ namespace Models.Models
 {
     public class Payment
     {
-        public int PaymentID { get; set; }
+        public int PaymentId { get; set; }
         public DateTime PaymentDate { get; set; }
         public Status PaymentStatus { get; set; }
         public string ApplicationUserId { get; set; }
