@@ -2,20 +2,13 @@
 {
     public class Flight
     {
-        public int FlightID{ get; set; }
-        public int AirlineID{ get; set; }
-        public int DepartureAirportID{ get; set; }
-        public int ArrivalAirportID{ get; set; }
-        public DateTime DepartureTime{ get; set; }
-        public DateTime ArrivalTime{ get; set; }
-        public int Duration{ get; set; }
-        public decimal Price{ get; set; }
-
-        public Airline Airline{ get; set; }
-        public Airport DepartureAirport{ get; set; }
-        public Airport ArrivalAirport{ get; set; }
-        public ICollection <Seat> Seats{ get; set; }
-        public ICollection <Booking> Bookings{ get; set; }
+        public int FlightId { get; set; }
+        public string Name { get; set; }
+        public string Country { get; set; }
+        public string City { get; set; }
+        
+        public ICollection<Seat> Seats { get; set; }
+        public ICollection<AirLineFlights> AirLineFlights { get; set; }
     }
 
 }

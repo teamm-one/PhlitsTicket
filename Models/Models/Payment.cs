@@ -1,13 +1,14 @@
-﻿namespace Models.Models
+﻿using Utility;
+
+namespace Models.Models
 {
     public class Payment
     {
         public int PaymentID { get; set; }
-        public int BookingID { get; set; }
         public DateTime PaymentDate { get; set; }
-        public decimal Amount { get; set; }
-        public string PaymentMethod { get; set; }
-        public string PaymentStatus { get; set; }
+        public Status PaymentStatus { get; set; }
+        public string ApplicationUserId { get; set; }
+        public ApplicationUser ApplicationUser { get; set; }
         public Booking Booking { get; set; }
     }
 

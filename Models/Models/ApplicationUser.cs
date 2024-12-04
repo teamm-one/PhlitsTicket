@@ -12,9 +12,9 @@ namespace Models.Models
     {
        
         public string? ImgUrl { get; set; }
-        public string? PhoneNumber {  get; set; }
-        public StaticData UserType { get; set; }
-        public string? PassborNumber { get; set; }
-        public ICollection<Booking> Bookings { get; set; }
+        public string PhoneNumber {  get; set; }
+        public string PassborNumber { get; set; }
+        public ICollection<Payment>? Payments { get; set; }
+        public ICollection<Booking>? Bookings { get; set; }
     }
 }

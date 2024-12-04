@@ -4,10 +4,12 @@
     {
         public int AirlineID { get; set; }
         public string Name { get; set; }
-        public string Country { get; set; }
-        public string IATA_Code { get; set; }
 
-        public ICollection<Flight> Flights { get; set; }
+        public int AirportLeaveId { get; set; }
+        public Airport AirPortLeave { get; set; }
+        public int AirPortArriveId { get; set; }
+        public Airport AirPortArrive { get; set; }
+        public ICollection<AirLineFlights> AirlineFlights { get; set; }
     }
 
 }

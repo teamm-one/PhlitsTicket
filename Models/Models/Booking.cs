@@ -1,18 +1,17 @@
-﻿namespace Models.Models
+﻿using Utility;
+namespace Models.Models
 {
     public class Booking
     {
         public int BookingID { get; set; }
-        public int UserID { get; set; }
-        public int FlightID { get; set; }
+        public Status Status { get; set; }
         public DateTime BookingDate { get; set; }
-        public int SeatID { get; set; }
-        public string Status { get; set; }
-
-        public ApplicationUser User { get; set; }
-        public Flight Flight { get; set; }
-        public Seat Seat { get; set; }
+        public string ApplicationUserId { get; set; }
+        public int SeatId { get; set; }
+        public int PaymentId { get; set; }
         public Payment Payment { get; set; }
+        public ApplicationUser ApplicationUser { get; set; }
+        public Seat Seat { get; set; }
     }
 
 }

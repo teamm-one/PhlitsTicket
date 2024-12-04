@@ -14,6 +14,7 @@ namespace PhlitsTicket
             builder.Services.AddControllersWithViews();
 
             //DbContext
+
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
             options.UseSqlServer(builder.Configuration.GetConnectionString("DeafultConnection")));
 
@@ -22,7 +23,7 @@ namespace PhlitsTicket
                 //1-Configure Identity User&Roles
             builder.Services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();
 
-
+            
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
