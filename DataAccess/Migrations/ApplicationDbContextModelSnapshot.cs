@@ -167,7 +167,7 @@ namespace DataAccess.Migrations
 
                     b.HasIndex("FlightId");
 
-                    b.ToTable("AirLineFlights");
+                    b.ToTable("AirLineFlights", (string)null);
                 });
 
             modelBuilder.Entity("Models.Models.Airline", b =>
@@ -204,7 +204,7 @@ namespace DataAccess.Migrations
 
                     b.HasIndex("AirportLeaveId");
 
-                    b.ToTable("Airlines");
+                    b.ToTable("Airlines", (string)null);
                 });
 
             modelBuilder.Entity("Models.Models.Airport", b =>
@@ -229,7 +229,7 @@ namespace DataAccess.Migrations
 
                     b.HasKey("AirportID");
 
-                    b.ToTable("Airports");
+                    b.ToTable("Airports", (string)null);
                 });
 
             modelBuilder.Entity("Models.Models.ApplicationUser", b =>
@@ -267,10 +267,6 @@ namespace DataAccess.Migrations
                     b.Property<string>("NormalizedUserName")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("PassborNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PasswordHash")
                         .HasColumnType("nvarchar(max)");
@@ -342,7 +338,7 @@ namespace DataAccess.Migrations
 
                     b.HasIndex("SeatId");
 
-                    b.ToTable("Bookings");
+                    b.ToTable("Bookings", (string)null);
                 });
 
             modelBuilder.Entity("Models.Models.Flight", b =>
@@ -367,7 +363,7 @@ namespace DataAccess.Migrations
 
                     b.HasKey("FlightId");
 
-                    b.ToTable("Flights");
+                    b.ToTable("Flights", (string)null);
                 });
 
             modelBuilder.Entity("Models.Models.Payment", b =>
@@ -392,7 +388,7 @@ namespace DataAccess.Migrations
 
                     b.HasIndex("ApplicationUserId");
 
-                    b.ToTable("Payments");
+                    b.ToTable("Payments", (string)null);
                 });
 
             modelBuilder.Entity("Models.Models.Seat", b =>
@@ -418,7 +414,7 @@ namespace DataAccess.Migrations
 
                     b.HasIndex("FlightID");
 
-                    b.ToTable("Seats");
+                    b.ToTable("Seats", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
