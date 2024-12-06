@@ -1,0 +1,53 @@
+﻿@model IEnumerable<Models.Models.Airport>;
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.AirportID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Country)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.City)
+            </th>
+            <th class="text-center">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.AirportID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Country)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.City)
+            </td>
+            <td class="text-center">
+                <a href="/Airport/Edit/@item.AirportID" class="btn btn-outline-primary py-1 me-2">Edit</a>
+                <a href="/Airport/Edit/@item.AirportID" class="btn btn-outline-success py-1 me-2">Details</a>
+                <a href="/Airport/Edit/@item.AirportID" class="btn btn-outline-danger py-1 me-2">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

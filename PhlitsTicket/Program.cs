@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Identity;
 using Models.Models;
 using DataAccess.Data;
 using Microsoft.EntityFrameworkCore;
+using DataAccess.IRepos;
+using DataAccess.Repos;
 namespace PhlitsTicket
 {
     public class Program
@@ -22,8 +24,9 @@ namespace PhlitsTicket
 
                 //1-Configure Identity User&Roles
             builder.Services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();
+            builder.Services.AddScoped<AirPortIRepo, AirPortRepo>();
 
-            
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
