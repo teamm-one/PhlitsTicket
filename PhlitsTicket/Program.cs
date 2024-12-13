@@ -25,6 +25,8 @@ namespace PhlitsTicket
                 //1-Configure Identity User&Roles
             builder.Services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();
             builder.Services.AddScoped<AirPortIRepo, AirPortRepo>();
+            builder.Services.AddScoped<AirLineIRepo, AirLineRepo>();
+            builder.Services.AddScoped<FlightIRepo, FlightRepo>();
 
 
             var app = builder.Build();

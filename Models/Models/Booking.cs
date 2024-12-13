@@ -3,7 +3,7 @@ namespace Models.Models
 {
     public class Booking
     {
-        public int BookingID { get; set; }
+        public int BookingId { get; set; }
         public Status Status { get; set; }
         public DateTime BookingDate { get; set; }
         public string ApplicationUserId { get; set; }

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20241205165050_init")]
+    [Migration("20241213194529_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -175,19 +175,13 @@ namespace DataAccess.Migrations
 
             modelBuilder.Entity("Models.Models.Airline", b =>
                 {
-                    b.Property<int>("AirlineID")
+                    b.Property<int>("AirlineId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AirlineID"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AirlineId"));
 
                     b.Property<int>("AirPortArriveId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("AirportID")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("AirportID1")
                         .HasColumnType("int");
 
                     b.Property<int>("AirportLeaveId")
@@ -197,13 +191,9 @@ namespace DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("AirlineID");
+                    b.HasKey("AirlineId");
 
                     b.HasIndex("AirPortArriveId");
-
-                    b.HasIndex("AirportID");
-
-                    b.HasIndex("AirportID1");
 
                     b.HasIndex("AirportLeaveId");
 
@@ -212,11 +202,11 @@ namespace DataAccess.Migrations
 
             modelBuilder.Entity("Models.Models.Airport", b =>
                 {
-                    b.Property<int>("AirportID")
+                    b.Property<int>("AirportId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AirportID"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AirportId"));
 
                     b.Property<string>("City")
                         .IsRequired()
@@ -230,7 +220,7 @@ namespace DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("AirportID");
+                    b.HasKey("AirportId");
 
                     b.ToTable("Airports");
                 });
@@ -305,11 +295,11 @@ namespace DataAccess.Migrations
 
             modelBuilder.Entity("Models.Models.Booking", b =>
                 {
-                    b.Property<int>("BookingID")
+                    b.Property<int>("BookingId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BookingID"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BookingId"));
 
                     b.Property<string>("ApplicationUserId")
                         .IsRequired()
@@ -324,20 +314,26 @@ namespace DataAccess.Migrations
                     b.Property<int>("PaymentId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("PaymentId1")
+                        .HasColumnType("int");
+
                     b.Property<int>("SeatId")
                         .HasColumnType("int");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.HasKey("BookingID");
+                    b.HasKey("BookingId");
 
                     b.HasIndex("ApplicationUserId");
 
                     b.HasIndex("ApplicationUserId1");
 
-                    b.HasIndex("PaymentId")
-                        .IsUnique();
+                    b.HasIndex("PaymentId");
+
+                    b.HasIndex("PaymentId1")
+                        .IsUnique()
+                        .HasFilter("[PaymentId1] IS NOT NULL");
 
                     b.HasIndex("SeatId");
 
@@ -493,21 +489,13 @@ namespace DataAccess.Migrations
             modelBuilder.Entity("Models.Models.Airline", b =>
                 {
                     b.HasOne("Models.Models.Airport", "AirPortArrive")
-                        .WithMany()
+                        .WithMany("AirlineArrives")
                         .HasForeignKey("AirPortArriveId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Models.Models.Airport", null)
-                        .WithMany("AirlineArrives")
-                        .HasForeignKey("AirportID");
-
-                    b.HasOne("Models.Models.Airport", null)
-                        .WithMany("AirlineLeaves")
-                        .HasForeignKey("AirportID1");
-
                     b.HasOne("Models.Models.Airport", "AirPortLeave")
-                        .WithMany()
+                        .WithMany("AirlineLeaves")
                         .HasForeignKey("AirportLeaveId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
@@ -530,10 +518,14 @@ namespace DataAccess.Migrations
                         .HasForeignKey("ApplicationUserId1");
 
                     b.HasOne("Models.Models.Payment", "Payment")
-                        .WithOne("Booking")
-                        .HasForeignKey("Models.Models.Booking", "PaymentId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .WithMany()
+                        .HasForeignKey("PaymentId")
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
+
+                    b.HasOne("Models.Models.Payment", null)
+                        .WithOne("Booking")
+                        .HasForeignKey("Models.Models.Booking", "PaymentId1");
 
                     b.HasOne("Models.Models.Seat", "Seat")
                         .WithMany()

@@ -15,7 +15,7 @@ namespace DataAccess.Migrations
                 name: "Airports",
                 columns: table => new
                 {
-                    AirportID = table.Column<int>(type: "int", nullable: false)
+                    AirportId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Country = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -23,7 +23,7 @@ namespace DataAccess.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Airports", x => x.AirportID);
+                    table.PrimaryKey("PK_Airports", x => x.AirportId);
                 });
 
             migrationBuilder.CreateTable(
@@ -85,37 +85,25 @@ namespace DataAccess.Migrations
                 name: "Airlines",
                 columns: table => new
                 {
-                    AirlineID = table.Column<int>(type: "int", nullable: false)
+                    AirlineId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     AirportLeaveId = table.Column<int>(type: "int", nullable: false),
-                    AirPortArriveId = table.Column<int>(type: "int", nullable: false),
-                    AirportID = table.Column<int>(type: "int", nullable: true),
-                    AirportID1 = table.Column<int>(type: "int", nullable: true)
+                    AirPortArriveId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Airlines", x => x.AirlineID);
+                    table.PrimaryKey("PK_Airlines", x => x.AirlineId);
                     table.ForeignKey(
                         name: "FK_Airlines_Airports_AirPortArriveId",
                         column: x => x.AirPortArriveId,
                         principalTable: "Airports",
-                        principalColumn: "AirportID");
-                    table.ForeignKey(
-                        name: "FK_Airlines_Airports_AirportID",
-                        column: x => x.AirportID,
-                        principalTable: "Airports",
-                        principalColumn: "AirportID");
-                    table.ForeignKey(
-                        name: "FK_Airlines_Airports_AirportID1",
-                        column: x => x.AirportID1,
-                        principalTable: "Airports",
-                        principalColumn: "AirportID");
+                        principalColumn: "AirportId");
                     table.ForeignKey(
                         name: "FK_Airlines_Airports_AirportLeaveId",
                         column: x => x.AirportLeaveId,
                         principalTable: "Airports",
-                        principalColumn: "AirportID");
+                        principalColumn: "AirportId");
                 });
 
             migrationBuilder.CreateTable(
@@ -280,7 +268,7 @@ namespace DataAccess.Migrations
                         name: "FK_AirLineFlights_Airlines_AirlineId",
                         column: x => x.AirlineId,
                         principalTable: "Airlines",
-                        principalColumn: "AirlineID");
+                        principalColumn: "AirlineId");
                     table.ForeignKey(
                         name: "FK_AirLineFlights_Flights_FlightId",
                         column: x => x.FlightId,
@@ -292,18 +280,19 @@ namespace DataAccess.Migrations
                 name: "Bookings",
                 columns: table => new
                 {
-                    BookingID = table.Column<int>(type: "int", nullable: false)
+                    BookingId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Status = table.Column<int>(type: "int", nullable: false),
                     BookingDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     SeatId = table.Column<int>(type: "int", nullable: false),
                     PaymentId = table.Column<int>(type: "int", nullable: false),
-                    ApplicationUserId1 = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                    ApplicationUserId1 = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    PaymentId1 = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Bookings", x => x.BookingID);
+                    table.PrimaryKey("PK_Bookings", x => x.BookingId);
                     table.ForeignKey(
                         name: "FK_Bookings_AspNetUsers_ApplicationUserId",
                         column: x => x.ApplicationUserId,
@@ -318,8 +307,12 @@ namespace DataAccess.Migrations
                         name: "FK_Bookings_Payments_PaymentId",
                         column: x => x.PaymentId,
                         principalTable: "Payments",
-                        principalColumn: "PaymentId",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "PaymentId");
+                    table.ForeignKey(
+                        name: "FK_Bookings_Payments_PaymentId1",
+                        column: x => x.PaymentId1,
+                        principalTable: "Payments",
+                        principalColumn: "PaymentId");
                     table.ForeignKey(
                         name: "FK_Bookings_Seats_SeatId",
                         column: x => x.SeatId,
@@ -336,16 +329,6 @@ namespace DataAccess.Migrations
                 name: "IX_Airlines_AirPortArriveId",
                 table: "Airlines",
                 column: "AirPortArriveId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Airlines_AirportID",
-                table: "Airlines",
-                column: "AirportID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Airlines_AirportID1",
-                table: "Airlines",
-                column: "AirportID1");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Airlines_AirportLeaveId",
@@ -404,8 +387,14 @@ namespace DataAccess.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Bookings_PaymentId",
                 table: "Bookings",
-                column: "PaymentId",
-                unique: true);
+                column: "PaymentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Bookings_PaymentId1",
+                table: "Bookings",
+                column: "PaymentId1",
+                unique: true,
+                filter: "[PaymentId1] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Bookings_SeatId",

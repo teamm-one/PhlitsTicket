@@ -40,7 +40,7 @@ namespace PhlitsTicket.Controllers
         [Authorize(Roles = StaticData.Admin)]
         public IActionResult Edit(int id)
         {
-            return View(airPort.GetOne(e => e.AirportID == id));
+            return View(airPort.GetOne(e => e.AirportId == id));
         }
         [Authorize(Roles = StaticData.Admin)]
         [HttpPost]
@@ -57,7 +57,7 @@ namespace PhlitsTicket.Controllers
             return RedirectToAction("Index");
         }
         public IActionResult Details(int id) {
-            return View(airPort.GetOne(e=>e.AirportID==id));
+            return View(airPort.GetOne(e=>e.AirportId==id));
         }
     }
 }

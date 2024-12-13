@@ -26,17 +26,17 @@ namespace DataAccess.Data
             modelBuilder.Entity<AirLineFlights>()
                 .HasKey(e => new { e.AirlineId, e.FlightId });
 
-            // العلاقة بين Airline و AirPortLeave
+            // العلاقة بين Airline و AirPortLeave (مغادرة)
             modelBuilder.Entity<Airline>()
                 .HasOne(a => a.AirPortLeave)
-                .WithMany()
+                .WithMany(a => a.AirlineLeaves)  // تعيين الخاصية المناسبة في Airport
                 .HasForeignKey(a => a.AirportLeaveId)
                 .OnDelete(DeleteBehavior.NoAction); // لا نقوم بحذف البيانات المرتبطة عند حذف الطيران
 
-            // العلاقة بين Airline و AirPortArrive
+            // العلاقة بين Airline و AirPortArrive (وصول)
             modelBuilder.Entity<Airline>()
                 .HasOne(a => a.AirPortArrive)
-                .WithMany()
+                .WithMany(a => a.AirlineArrives)  // تعيين الخاصية المناسبة في Airport
                 .HasForeignKey(a => a.AirPortArriveId)
                 .OnDelete(DeleteBehavior.NoAction); // لا نقوم بحذف البيانات المرتبطة عند حذف الطيران
 
@@ -61,7 +61,12 @@ namespace DataAccess.Data
                 .HasForeignKey(b => b.ApplicationUserId)
                 .OnDelete(DeleteBehavior.NoAction); // لا نقوم بحذف البيانات المرتبطة عند حذف الحجز
 
-            // العلاقة بين Booking و Payment - هنا يجب تحديد NoAction بدلاً من Cascade لتجنب الخطأ
+            // العلاقة بين Booking و Payment - تحديد NoAction لتجنب الخطأ
+            modelBuilder.Entity<Booking>()
+                .HasOne(b => b.Payment)
+                .WithMany()
+                .HasForeignKey(b => b.PaymentId)
+                .OnDelete(DeleteBehavior.NoAction); // لا نقوم بحذف البيانات المرتبطة عند حذف الحجز
 
             // العلاقة بين Booking و Seat
             modelBuilder.Entity<Booking>()
