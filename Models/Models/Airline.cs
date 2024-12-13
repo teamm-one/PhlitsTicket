@@ -4,7 +4,7 @@
     {
         public int AirlineID { get; set; }
         public string Name { get; set; }
-
+        //test
         public int AirportLeaveId { get; set; }
         public Airport AirPortLeave { get; set; }
         public int AirPortArriveId { get; set; }
