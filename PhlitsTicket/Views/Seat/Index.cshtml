@@ -1,0 +1,54 @@
+﻿@model IEnumerable<Models.Models.Seat>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead class="text-center">
+        <tr>
+            <th>
+                #
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Class)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Availability)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Flight)
+            </th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody class="text-center">
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.SeatID
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Class)
+                </td>
+                <td>
+                    @item.Availability
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Flight.Name)
+                </td>
+                <td>
+                    <a href="/Seat/Details/@item.SeatID" class="btn btn-outline-success py-1 me-2">Details</a>
+                    <a href="/Seat/Edit/@item.SeatID" class="btn btn-outline-primary py-1 me-2">Edit</a>
+                    <a href="/Seat/Delete/@item.SeatID" class="btn btn-outline-danger py-1 me-2">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

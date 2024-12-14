@@ -74,12 +74,20 @@ namespace DataAccess.Repos
         {
             _context.SaveChanges();
         }
-        public bool Delete(int id)
+        public bool Delete(int? id,T? model=null)
         {
-            var item = _model.Find(id);
-            if (item != null)
+            if (id !=null)
             {
-                _model.Remove(item);
+                var item = _model.Find(id);
+                if (item != null)
+                {
+                    _model.Remove(item);
+                    return true;
+                }
+            }
+            else
+            {
+                _model.Remove(model);
                 return true;
             }
             return false;

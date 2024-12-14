@@ -45,12 +45,7 @@ namespace DataAccess.IRepos
         /// <param name="entity">The entity to update.</param>
         void Edit(T entity);
 
-        /// <summary>
-        /// Deletes an entity by ID.
-        /// </summary>
-        /// <param name="id">The ID of the entity to delete.</param>
-        /// <returns>True if the entity was found and deleted, otherwise false.</returns>
-        bool Delete(int id);
+        bool Delete(int? id, T? model=null);
 
         /// <summary>
         /// Commits changes made to the database.

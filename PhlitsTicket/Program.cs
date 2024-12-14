@@ -27,6 +27,8 @@ namespace PhlitsTicket
             builder.Services.AddScoped<AirPortIRepo, AirPortRepo>();
             builder.Services.AddScoped<AirLineIRepo, AirLineRepo>();
             builder.Services.AddScoped<FlightIRepo, FlightRepo>();
+            builder.Services.AddScoped<SeatIRepo, SeatRepo>();
+            builder.Services.AddScoped<AirLineFlightsIRepo, AirLineFlightsRepo>();
 
 
             var app = builder.Build();

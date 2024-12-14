@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Repos
 {
-    internal class AirLineFlightsRepo:BaseRepo<AirLineFlights>,AirLineFlightsIRepo
+    public class AirLineFlightsRepo:BaseRepo<AirLineFlights>,AirLineFlightsIRepo
     {
         ApplicationDbContext _context;
 public AirLineFlightsRepo(ApplicationDbContext context) : base(context)

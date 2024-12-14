@@ -57,7 +57,7 @@ namespace PhlitsTicket.Controllers
                 var result = await _userManager.CreateAsync(newUser, user.Password);
                 if (result.Succeeded)
                 {
-                    await _userManager.AddToRoleAsync(newUser, StaticData.Admin);
+                    await _userManager.AddToRoleAsync(newUser, StaticData.User);
                     await _signInManager.SignInAsync(newUser, isPersistent: false);
                     return RedirectToAction("Index", "Home");
                 }

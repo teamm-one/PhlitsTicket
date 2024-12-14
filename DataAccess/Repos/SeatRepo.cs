@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Repos
 {
-    internal class SeatRepo:BaseRepo<Seat>,SeatIRepo
+    public class SeatRepo:BaseRepo<Seat>,SeatIRepo
     {
         ApplicationDbContext _context;
 
