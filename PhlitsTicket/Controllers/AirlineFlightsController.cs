@@ -61,17 +61,29 @@ namespace PhlitsTicket.Controllers
             return View(airLineFlights);
         }
         [Authorize(Roles = StaticData.Admin)]
-        public IActionResult Delete(int lineId,int flightId)
+        public IActionResult Delete(int lineId, int flightId)
         {
-            var air=_airlineFlights.GetOne((e=>e.AirlineId == lineId & e.FlightId==flightId));
-            if (air != null) {
-                _airlineFlights.Delete(null,model:air);
+            var air = _airlineFlights.GetOne((e => e.AirlineId == lineId & e.FlightId == flightId));
+            if (air != null)
+            {
+                _airlineFlights.Delete(null, model: air);
                 _airlineFlights.commit();
                 return RedirectToAction("Index");
             }
             return RedirectToAction("Index");
         }
-
+        [Authorize(Roles = StaticData.Admin)]
+        public IActionResult Edit(int lineId, int flightId)
+        {
+            var air = _airlineFlights.GetOne((e => e.AirlineId == lineId & e.FlightId == flightId));
+            if (air != null)
+            {
+                ViewData["airlines"] = _ailine.GetAll().ToList();
+                ViewData["flights"] = _flight.GetAll().ToList();
+                return View(air);
+            }
+            return RedirectToAction("Index");
+        }
 
     }
 }

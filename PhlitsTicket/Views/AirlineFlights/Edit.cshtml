@@ -1,0 +1,50 @@
+﻿@model Models.Models.AirLineFlights
+
+@{
+    ViewData["Title"] = "Edit";
+    var airlines = ViewData["airlines"] as List<Models.Models.Airline>;
+    var flights = ViewData["flights"] as List<Models.Models.Flight>;
+}
+
+<h1>Edit</h1>
+
+<h4>AirLineFlights</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="AirlineId" class="control-label">Airline</label>
+                <select asp-for="AirlineId" class="form-control">
+                    @foreach (var i in airlines)
+                    {
+                        <option value="@i.AirlineId">@i.Name</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <label asp-for="FlightId" class="control-label">Flight</label>
+                <select asp-for="FlightId" class="form-control">
+                    @foreach (var i in flights)
+                    {
+                        <option value="@i.FlightId">@i.Name</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
