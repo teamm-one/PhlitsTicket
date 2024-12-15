@@ -12,7 +12,6 @@ namespace Models.Models
     {
        
         public string? ImgUrl { get; set; }
-        public ICollection<Payment>? Payments { get; set; }
         public ICollection<Booking>? Bookings { get; set; }
     }
 }

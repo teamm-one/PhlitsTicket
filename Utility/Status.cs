@@ -10,6 +10,5 @@ namespace Utility
     {
         Done,
         Await,
-        Faild
     }
 }

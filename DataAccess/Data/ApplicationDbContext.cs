@@ -15,8 +15,8 @@ namespace DataAccess.Data
         public DbSet<Airport> Airports { get; set; }
         public DbSet<Booking> Bookings { get; set; }
         public DbSet<Flight> Flights { get; set; }
-        public DbSet<Payment> Payments { get; set; }
         public DbSet<Seat> Seats { get; set; }
+        public DbSet<Trip> Trip { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -52,28 +52,21 @@ namespace DataAccess.Data
                 .HasMany(f => f.AirLineFlights)
                 .WithOne(af => af.Flight)
                 .HasForeignKey(af => af.FlightId)
-                .OnDelete(DeleteBehavior.NoAction); // لا نقوم بحذف البيانات المرتبطة عند حذف الطيران
+                .OnDelete(DeleteBehavior.NoAction);
 
             // العلاقة بين Booking و ApplicationUser
             modelBuilder.Entity<Booking>()
                 .HasOne(b => b.ApplicationUser)
                 .WithMany()
                 .HasForeignKey(b => b.ApplicationUserId)
-                .OnDelete(DeleteBehavior.NoAction); // لا نقوم بحذف البيانات المرتبطة عند حذف الحجز
-
-            // العلاقة بين Booking و Payment - تحديد NoAction لتجنب الخطأ
-            modelBuilder.Entity<Booking>()
-                .HasOne(b => b.Payment)
-                .WithMany()
-                .HasForeignKey(b => b.PaymentId)
-                .OnDelete(DeleteBehavior.NoAction); // لا نقوم بحذف البيانات المرتبطة عند حذف الحجز
+                .OnDelete(DeleteBehavior.NoAction);
 
             // العلاقة بين Booking و Seat
             modelBuilder.Entity<Booking>()
                 .HasOne(b => b.Seat)
                 .WithMany()
                 .HasForeignKey(b => b.SeatId)
-                .OnDelete(DeleteBehavior.NoAction); // لا نقوم بحذف البيانات المرتبطة عند حذف الحجز
+                .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }
