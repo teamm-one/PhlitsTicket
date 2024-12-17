@@ -32,6 +32,12 @@ namespace PhlitsTicket
             builder.Services.AddScoped<TripIRepo, TripRepo>();
 
 
+            builder.Services.ConfigureApplicationCookie(o =>
+            {
+                o.LoginPath = "/User/Login";
+                o.AccessDeniedPath = "/User/NotAdmin";
+            });
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using System.Security.Claims;
+<!DOCTYPE html>
+
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -34,9 +36,17 @@
                     <div class="dropdown nav-dropdowen me-4">
                         @if (User.Identity.IsAuthenticated)
                         {
+                            var imgUrl = User.FindFirstValue("ImgUrl");
                             <a class="btn text-dark py-0 fw-600 d-flex align-items-center dropdown-toggle border-0" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <img src="~/assets/users/download.png" class="avatar" alt="Alternate Text" />
-
+                                @if (imgUrl == null)
+                                {
+                                    <img src="~/assets/users/download.png" class="avatar" alt="Alternate Text" />
+                                }
+                                else
+                                {
+                                    <img src="~/assets/users/@imgUrl" class="avatar" alt="Alternate Text" />
+                                }
+                                
 
                                 <span class="mx-1">@User.Identity.Name</span>
                             </a>
@@ -54,12 +64,13 @@
                                     <li><a class="dropdown-item text-dark ps-2" href="/User/CreateNewAdmin"><i class="fa-solid fa-user-plus me-2"></i>Create admin</a></li>
                                     <li><a class="dropdown-item text-dark ps-2" href="/User/LogOut"><i class="fa-solid fa-arrow-right-to-bracket me-2"></i>Log-out</a></li>
                                 }
-                                else{
+                                else
+                                {
 
                                     <hr class="ps-2 mx-auto" />
                                     <li><a class="dropdown-item text-dark ps-2" href="/User/LogOut"><i class="fa-solid fa-arrow-right-to-bracket me-2"></i>Log-out</a></li>
-                                    }
-                                </ul>
+                                }
+                            </ul>
                         }
                         else
                         {

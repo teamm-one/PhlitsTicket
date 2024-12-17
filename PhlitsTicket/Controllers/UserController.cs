@@ -6,6 +6,7 @@ using Microsoft.IdentityModel.Tokens;
 using Models.Models;
 using Models.ViewModels;
 using System.IO;
+using System.Security.Claims;
 using Utility;
 
 namespace PhlitsTicket.Controllers
@@ -58,7 +59,18 @@ namespace PhlitsTicket.Controllers
                 if (result.Succeeded)
                 {
                     await _userManager.AddToRoleAsync(newUser, StaticData.User);
-                    await _signInManager.SignInAsync(newUser, isPersistent: false);
+                    if (newUser.ImgUrl != null)
+                    {
+                        var claims = new List<Claim>
+                        {
+                            new Claim("ImgUrl",newUser.ImgUrl)
+                        };
+                        await _signInManager.SignInWithClaimsAsync(newUser, isPersistent: false, claims);
+                    }
+                    else
+                    {
+                        await _signInManager.SignInAsync(newUser, isPersistent: false);
+                    }
                     return RedirectToAction("Index", "Home");
                 }
                 foreach (var error in result.Errors)
@@ -79,7 +91,18 @@ namespace PhlitsTicket.Controllers
             var applicationUser = await _userManager.FindByNameAsync(userVM.UserName);
             if (applicationUser != null && await _userManager.CheckPasswordAsync(applicationUser, userVM.Password))
             {
-                await _signInManager.SignInAsync(applicationUser, userVM.RememberMe);
+                if (applicationUser.ImgUrl != null)
+                {
+                    var claims = new List<Claim>
+                {
+                    new Claim("ImgUrl",applicationUser.ImgUrl)
+                };
+                    await _signInManager.SignInWithClaimsAsync(applicationUser, userVM.RememberMe, claims);
+                }
+                else
+                {
+                    await _signInManager.SignInAsync(applicationUser, userVM.RememberMe);
+                }
                 TempData["logedIn"] = "Loged in successfully";
                 return RedirectToAction("Index", "Home");
             }
@@ -128,6 +151,10 @@ namespace PhlitsTicket.Controllers
                 ModelState.AddModelError("Password", "Password It must consist of at least 6 letters, lowercase and uppercase");
             }
             return View(userVM);
+        }
+        public IActionResult NotAdmin()
+        {
+            return View();
         }
     }
 }
