@@ -1,0 +1,45 @@
+﻿@model Models.ViewModels.TripVM
+
+@{
+    ViewData["Title"] = "SelectFlight";
+    var flights = ViewData["flights"] as List<Models.Models.AirLineFlights>;
+}
+
+<h1>SelectFlight</h1>
+
+<h4>Trip</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="TripDataVM.LeaveAt" value="@Model.TripDataVM.LeaveAt" class="form-control" />
+            <input type="hidden" asp-for="TripDataVM.Price" value="@Model.TripDataVM.Price" class="form-control" />
+            <input type="hidden" asp-for="TripDataVM.Description" value="@Model.TripDataVM.Description" class="form-control" />
+            <input type="hidden" asp-for="TripDataVM.AirlineId" value="@Model.TripDataVM.AirlineId" />
+            <div class="form-group">
+                <label asp-for="FlightId" class="control-label">Select Flight</label>
+                <select asp-for="FlightId" class="form-control">
+                   <option disabled selected>Select Flight</option>
+                    @foreach(var i in flights)
+                    {
+                        <option value="@i.FlightId">@i.Flight.Name</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

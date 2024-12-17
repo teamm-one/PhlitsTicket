@@ -1,0 +1,68 @@
+﻿@model IEnumerable<Models.Models.Trip>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table text-center">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>
+                @Html.DisplayNameFor(model => model.LeaveAt)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Airline)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Flight)
+            </th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <th>@item.TripId</th>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LeaveAt)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Status)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Airline.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Flight.Name)
+                </td>
+                <td>
+                    <a href="/Trip/Details/@item.TripId" class="btn btn-outline-success py-1 me-2">Details</a>
+                    <a href="/Trip/Edit/@item.TripId" class="btn btn-outline-primary py-1 me-2">Edit</a>
+                    <a href="/Trip/Delete/@item.TripId" class="btn btn-outline-danger py-1 me-2">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

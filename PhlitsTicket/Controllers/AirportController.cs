@@ -52,9 +52,16 @@ namespace PhlitsTicket.Controllers
         }
         [Authorize(Roles = StaticData.Admin)]
         public IActionResult Delete(int id) {
-            airPort.Delete(id);
-            airPort.commit();
-            return RedirectToAction("Index");
+            try
+            {
+                airPort.Delete(id);
+                airPort.commit();
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return RedirectToAction("Index");
+            }
         }
         public IActionResult Details(int id) {
             return View(airPort.GetOne(e=>e.AirportId==id));

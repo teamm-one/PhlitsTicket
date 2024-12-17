@@ -1,0 +1,56 @@
+﻿@model Models.ViewModels.TripDataVM
+
+@{
+    ViewData["Title"] = "Create";
+    var airlines = ViewData["airlines"] as List<Models.Models.Airline>;
+}
+
+<h1>Create</h1>
+
+<h4>Trip</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="SelectFlight">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="LeaveAt" class="control-label"></label>
+                <input asp-for="LeaveAt" class="form-control" />
+                <span asp-validation-for="LeaveAt" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Price" class="control-label"></label>
+                <input asp-for="Price" type="number" class="form-control" />
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AirlineId" class="control-label">Select Airline</label>
+                <select asp-for="AirlineId" class="form-control">
+                    <option selected disabled >Select Airline</option>
+                    @foreach(var i in airlines)
+                    {
+                        <option value="@i.AirlineId">@i.Name</option>
+                    }
+                </select>
+                <span asp-validation-for="AirlineId" class="text-danger"></span>
+
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Next" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
