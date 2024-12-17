@@ -1,4 +1,4 @@
-﻿@model Models.Models.AirLineFlights
+﻿@model Models.ViewModels.AirLineFlightsVM
 
 @{
     ViewData["Title"] = "Edit";
@@ -13,13 +13,23 @@
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <input type="hidden" name="lastAirId" " value="@Model.AirlineId" />
+            <input type="hidden" name="lastFlightId" " value="@Model.FlightId" />
             <div class="form-group">
                 <label asp-for="AirlineId" class="control-label">Airline</label>
                 <select asp-for="AirlineId" class="form-control">
                     @foreach (var i in airlines)
                     {
-                        <option value="@i.AirlineId">@i.Name</option>
+                        if (i.AirlineId != Model.AirlineId)
+                        {
+                            <option value="@i.AirlineId">@i.Name</option>
+                        }
+                        else
+                        {
+                            <option selected value="@i.AirlineId">@i.Name</option>
+
+                        }
                     }
                 </select>
             </div>
@@ -28,7 +38,15 @@
                 <select asp-for="FlightId" class="form-control">
                     @foreach (var i in flights)
                     {
-                        <option value="@i.FlightId">@i.Name</option>
+                        if (i.FlightId != Model.FlightId)
+                        {
+                            <option value="@i.FlightId">@i.Name</option>
+                        }
+                        else
+                        {
+                            <option selected value="@i.FlightId">@i.Name</option>
+
+                        }
                     }
                 </select>
             </div>

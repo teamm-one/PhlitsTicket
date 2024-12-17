@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Models.ViewModels
 {
-    public class airLineFlightsVM
+    public class AirLineFlightsVM
     {
         public int FlightId { get; set; }
         public int AirlineId { get; set; }
