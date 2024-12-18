@@ -4,6 +4,8 @@ using DataAccess.Data;
 using Microsoft.EntityFrameworkCore;
 using DataAccess.IRepos;
 using DataAccess.Repos;
+using Utility;
+using Stripe;
 namespace PhlitsTicket
 {
     public class Program
@@ -37,6 +39,8 @@ namespace PhlitsTicket
                 o.LoginPath = "/User/Login";
                 o.AccessDeniedPath = "/User/NotAdmin";
             });
+            builder.Services.Configure<StripeSetting>(builder.Configuration.GetSection("Stripe"));
+            StripeConfiguration.ApiKey = builder.Configuration["Stripe:SecretKey"];
 
             var app = builder.Build();
 

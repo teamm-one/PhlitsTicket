@@ -12,7 +12,7 @@ namespace Models.ViewModels
     {
         public int TripId { get; set; }
         public DateTime LeaveAt { get; set; }
-        public string Price { get; set; }
+        public long Price { get; set; }
         public string Description { get; set; }
         public Status Status { get; set; }
         public int AirlineId { get; set; }
