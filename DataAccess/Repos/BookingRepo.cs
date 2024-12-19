@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Repos
 {
-    internal class BookingRepo:BaseRepo<Booking>,BookingIRepo
+    public class BookingRepo:BaseRepo<Booking>,BookingIRepo
     {
         ApplicationDbContext _context;
 

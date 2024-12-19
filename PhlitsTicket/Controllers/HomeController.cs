@@ -2,9 +2,11 @@ using DataAccess.IRepos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Models.Models;
 using Models.ViewModels;
 using Stripe.Checkout;
 using System.Diagnostics;
+using System.Security.Claims;
 using Utility;
 //sk_test_51QXVljFKQdroNBxjROWk3ehl9ocBy6ISz3reSQDLt6c66A1Z5XVjiVEMzm4pj8Kw2PfLkbhK4w75KVGCAABpt2oU00dTqGWyTJ
 //sk_test_51QXVpbIHVyjpqHREPbN4lpmU8cXos8dFRnaT2IZPjo3vHCiL4koSv1YvRu238WtXenCb2sLM2lVgkDAW4LK6YM9500pkFdl2lt
@@ -14,10 +16,14 @@ namespace PhlitsTicket.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly TripIRepo _trip;
-        public HomeController(ILogger<HomeController> logger, TripIRepo trip)
+        private readonly SeatIRepo _seat;
+        private readonly BookingIRepo _book;
+        public HomeController(ILogger<HomeController> logger, TripIRepo trip, SeatIRepo seat,BookingIRepo book)
         {
             _logger = logger;
             _trip = trip;
+            _seat = seat;
+            _book = book;
         }
 
         public IActionResult Index(string from = null, string to = null)
@@ -62,53 +68,100 @@ namespace PhlitsTicket.Controllers
             }
         }
         [Authorize]
-        public IActionResult Book(int tripId)
-        {
-            return View();
-        }
-        [Authorize]
-        public IActionResult Pay(int id)
+        public IActionResult Book(int id)
         {
             var trip = _trip.GetOne(e => e.TripId == id, additionalIncludes:
+    e => e.Include(e => e.Airline)
+        .ThenInclude(e => e.AirPortLeave)
+        .Include(e => e.Airline)
+        .ThenInclude(e => e.AirPortArrive)
+        .Include(e => e.Flight)
+        .ThenInclude(e => e.Seats)
+    );
+            if (trip != null)
+            {
+                return View(trip);
+            }
+            return RedirectToAction("Index");
+        }
+        [Authorize]
+        public IActionResult Pay(int tripId,string seat)
+        {
+            var trip = _trip.GetOne(e => e.TripId == tripId, additionalIncludes:
                 e => e.Include(e => e.Airline)
                     .ThenInclude(e => e.AirPortLeave)
                     .Include(e => e.Airline)
                     .ThenInclude(e => e.AirPortArrive)
                     .Include(e => e.Flight)
+                    .ThenInclude (e => e.Seats)
                 );
+            var chekSeat = _seat.GetOne(e => e.FlightID == trip.FlightId && e.Class == seat&&e.Availability==true);
             if (trip != null)
             {
-                var options = new SessionCreateOptions
+               if(chekSeat != null)
                 {
-                    PaymentMethodTypes = new List<string> { "card" },
-                    LineItems = new List<SessionLineItemOptions>(),
-                    Mode = "payment",
-                    SuccessUrl = $"{Request.Scheme}://{Request.Host}",
-                    CancelUrl = $"{Request.Scheme}://{Request.Host}/Home/Index",
-                };
-                options.LineItems.Add(
-                    new SessionLineItemOptions
+                    var options = new SessionCreateOptions
                     {
-                        PriceData = new SessionLineItemPriceDataOptions
+                        PaymentMethodTypes = new List<string> { "card" },
+                        LineItems = new List<SessionLineItemOptions>(),
+                        Mode = "payment",
+                        SuccessUrl = $"{Request.Scheme}://{Request.Host}/Home/CreateBook?tripId={tripId}&seat={chekSeat.SeatID}",
+                        CancelUrl = $"{Request.Scheme}://{Request.Host}/Home/Index",
+                    };
+                    options.LineItems.Add(
+                        new SessionLineItemOptions
                         {
-                            Currency = "Egp",
-                            ProductData = new SessionLineItemPriceDataProductDataOptions
+                            PriceData = new SessionLineItemPriceDataOptions
                             {
-                                Name = $"Tiket From Airport {trip.Airline.AirPortLeave.Name} To Airport {trip.Airline.AirPortArrive.Name}",
-                                Description = trip.Description
+                                Currency = "Egp",
+                                ProductData = new SessionLineItemPriceDataProductDataOptions
+                                {
+                                    Name = $"Tiket From Airport {trip.Airline.AirPortLeave.Name} To Airport {trip.Airline.AirPortArrive.Name}",
+                                    Description = trip.Description
+                                },
+                                UnitAmount = trip.Price * 100
                             },
-                            UnitAmount = trip.Price * 100
-                        },
-                        Quantity = 1,
-                    }
-                    );
-                var service = new SessionService();
-                var session = service.Create(options);
-                return Redirect(session.Url);
+                            Quantity = 1,
+                        }
+                        );
+                    var service = new SessionService();
+                    var session = service.Create(options);
+                    return Redirect(session.Url);
+                }
+                return Redirect($"{Request.Scheme}://{Request.Host}/Home/Book?id={tripId}");
             }
             return RedirectToAction("Index");
         }
-
+        [Authorize]
+        public IActionResult CreateBook(int tripId,int seat)
+        {
+            var getSeat=_seat.GetOne(e=>e.Availability==true&&e.SeatID==seat);
+            if (getSeat != null)
+            {
+                try
+                {
+                    var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                    Booking book = new Booking
+                    {
+                        BookingDate = DateTime.Now,
+                        SeatId = getSeat.SeatID,
+                        ApplicationUserId = userId,
+                        TripId= tripId
+                    };
+                    _book.Create(book);
+                    _book.commit();
+                    getSeat.Availability= false;
+                    _seat.Edit(getSeat);
+                    _seat.commit();
+                    return RedirectToAction("Index");
+                }
+                catch
+                {
+                    return Redirect($"{Request.Scheme}://{Request.Host}/Home/Book?id={tripId}");
+                }
+            }
+            return Redirect($"{Request.Scheme}://{Request.Host}/Home/Book?id={tripId}");
+        }
         public IActionResult Privacy()
         {
             return View();

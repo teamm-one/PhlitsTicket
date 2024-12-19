@@ -32,6 +32,7 @@ namespace PhlitsTicket
             builder.Services.AddScoped<SeatIRepo, SeatRepo>();
             builder.Services.AddScoped<AirLineFlightsIRepo, AirLineFlightsRepo>();
             builder.Services.AddScoped<TripIRepo, TripRepo>();
+            builder.Services.AddScoped<BookingIRepo, BookingRepo>();
 
 
             builder.Services.ConfigureApplicationCookie(o =>
