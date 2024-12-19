@@ -153,7 +153,7 @@ namespace PhlitsTicket.Controllers
                     getSeat.Availability= false;
                     _seat.Edit(getSeat);
                     _seat.commit();
-                    return RedirectToAction("Index");
+                    return Redirect($"{Request.Scheme}://{Request.Host}/Booking/Index");
                 }
                 catch
                 {

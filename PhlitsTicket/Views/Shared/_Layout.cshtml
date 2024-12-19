@@ -29,9 +29,16 @@
                         <li class="nav-item">
                             <a class="nav-link items-hover fs-15 fw-600 text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link items-hover fs-15 fw-600 text-dark" asp-area="" asp-controller="Booking" asp-action="Index">My Bookings</a>
+                            </li>
+                        }
                         <li class="nav-item">
                             <a class="nav-link items-hover fs-15 fw-600 text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
+                        
                     </ul>
                     <div class="dropdown nav-dropdowen me-4">
                         @if (User.Identity.IsAuthenticated)

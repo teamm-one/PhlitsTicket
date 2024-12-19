@@ -1,0 +1,60 @@
+﻿@model List<Models.Models.Booking>
+@{
+    ViewData["title"] = "My Bookings";
+}
+<div class="alert alert-success w-50 mx-auto text-center">
+    <h2>Your Bookings</h2>
+</div>
+<div class="container shadow border py-3 rounded-4">
+    <table class="table my-2 align-items-center table-striped rounded-2 table-bordered text-center border table-hover">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Booking Date</th>
+                <th>Trip Date</th>
+                <th>Price</th>
+                <th>Seat Number</th>
+                <th>Seat Class</th>
+                <th>From Country</th>
+                <th>To Country</th>
+                <th>From City</th>
+                <th>To City</th>
+                <th>From Airport</th>
+                <th>To Airport</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.Count > 0)
+            {
+                @foreach (var i in Model)
+                {
+                    <tr>
+                        <td>@i.BookingId</td>
+                        <td>@i.BookingDate</td>
+                        <td>@i.Trip.LeaveAt</td>
+                        <td>$@i.Trip.Price</td>
+                        <td>@i.SeatId</td>
+                        <td>@i.Seat.Class</td>
+                        <td>@i.Trip.Airline.AirPortLeave.Country</td>
+                        <td>@i.Trip.Airline.AirPortArrive.Country</td>
+                        <td>@i.Trip.Airline.AirPortLeave.City</td>
+                        <td>@i.Trip.Airline.AirPortArrive.City</td>
+                        <td>@i.Trip.Airline.AirPortLeave.Name</td>
+                        <td>@i.Trip.Airline.AirPortArrive.Name</td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="12">You have not booked any trips yet</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<style>
+    th , td{
+        vertical-align:middle;
+    }
+</style>
