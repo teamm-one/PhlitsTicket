@@ -40,17 +40,17 @@
                 <h6 class="fw-bold">Price:$@i.Price</h6>
                 <h6 class="fw-bold">Leave At: @i.LeaveAt</h6>
                 <div class="w-100 text-center mt-3">
-                    <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                    <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop-@i.TripId">
                         Details
                     </button>
                 </div>
             </div>
             //modal
-            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal fade" id="staticBackdrop-@i.TripId" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel-@i.TripId" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h1 class="modal-title fw-bold fs-5" id="staticBackdropLabel">Ticket Deatils</h1>
+                            <h1 class="modal-title fw-bold fs-5" id="staticBackdropLabel-@i.TripId">Ticket Details</h1>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
@@ -88,7 +88,7 @@
                                     </tr>
                                     <tr>
                                         <td>Available Seats</td>
-                                         <td colspan="2">@i.Flight.Seats.Where(e=>e.Availability==true).Count()</td> 
+                                        <td colspan="2">@i.Flight.Seats.Where(e => e.Availability == true).Count()</td>
                                     </tr>
                                     <tr>
                                         <td>Ticket Price</td>
