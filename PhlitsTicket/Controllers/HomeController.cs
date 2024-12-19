@@ -27,7 +27,9 @@ namespace PhlitsTicket.Controllers
                 var trips = _trip.GetAll(additionalIncludes: e => e.Include(e => e.Airline)
                 .ThenInclude(e => e.AirPortLeave)
                 .Include(e => e.Airline)
-                .ThenInclude(e => e.AirPortArrive), expression: e => e.Status != Status.Done).ToList();
+                .ThenInclude(e => e.AirPortArrive)
+                .Include(e => e.Flight)
+                .ThenInclude(e => e.Seats), expression: e => e.Status != Status.Done).ToList();
                 foreach (var i in trips)
                 {
                     if (i.LeaveAt <= DateTime.Now)
@@ -42,12 +44,27 @@ namespace PhlitsTicket.Controllers
             else
             {
                 var trips = _trip.GetAll(additionalIncludes: e => e.Include(e => e.Airline)
-                    .ThenInclude(e => e.AirPortLeave)
-                    .Include(e => e.Airline)
-                    .ThenInclude(e => e.AirPortArrive), expression: e => (e.Airline.AirPortLeave.City.Contains(from) || e.Airline.AirPortArrive.City.Contains(from) ||
-                    e.Airline.AirPortLeave.City.Contains(to) || e.Airline.AirPortArrive.City.Contains(to)) && e.Status != Status.Done).ToList();
+                .ThenInclude(e => e.AirPortLeave)
+                .Include(e => e.Airline)
+                .ThenInclude(e => e.AirPortArrive)
+                .Include(e => e.Flight)
+                .ThenInclude(e => e.Seats), expression: e => (e.Airline.AirPortLeave.City.Contains(from) || e.Airline.AirPortArrive.City.Contains(to)) && e.Status != Status.Done).ToList();
+                foreach (var i in trips)
+                {
+                    if (i.LeaveAt <= DateTime.Now)
+                    {
+                        i.Status = Status.Done;
+                        _trip.Edit(i);
+                        _trip.commit();
+                    }
+                }
                 return View(trips);
             }
+        }
+        [Authorize]
+        public IActionResult Book(int tripId)
+        {
+            return View();
         }
         [Authorize]
         public IActionResult Pay(int id)
@@ -57,6 +74,7 @@ namespace PhlitsTicket.Controllers
                     .ThenInclude(e => e.AirPortLeave)
                     .Include(e => e.Airline)
                     .ThenInclude(e => e.AirPortArrive)
+                    .Include(e => e.Flight)
                 );
             if (trip != null)
             {
@@ -79,7 +97,7 @@ namespace PhlitsTicket.Controllers
                                 Name = $"Tiket From Airport {trip.Airline.AirPortLeave.Name} To Airport {trip.Airline.AirPortArrive.Name}",
                                 Description = trip.Description
                             },
-                            UnitAmount = trip.Price*100
+                            UnitAmount = trip.Price * 100
                         },
                         Quantity = 1,
                     }
