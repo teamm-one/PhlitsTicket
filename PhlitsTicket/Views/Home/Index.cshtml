@@ -34,8 +34,8 @@
         @foreach (var i in Model)
         {
             <div class="w-20 bg-light item px-2 py-4 text-center shadow border rounded-4">
-                <h6 class="fw-bold">From: @i.Airline.AirPortLeave.Name</h6>
-                <h6 class="fw-bold">To: @i.Airline.AirPortArrive.Name</h6>
+                <h6 class="fw-bold">From City: @i.Airline.AirPortLeave.City</h6>
+                <h6 class="fw-bold">To City: @i.Airline.AirPortArrive.City</h6>
                 <h6 class="fw-bold">Description: @i.Description</h6>
                 <h6 class="fw-bold">Price:$@i.Price</h6>
                 <h6 class="fw-bold">Leave At: @i.LeaveAt</h6>
