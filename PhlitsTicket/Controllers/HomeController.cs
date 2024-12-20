@@ -95,7 +95,7 @@ namespace PhlitsTicket.Controllers
                     .Include(e => e.Flight)
                     .ThenInclude (e => e.Seats)
                 );
-            var chekSeat = _seat.GetOne(e => e.FlightID == trip.FlightId && e.Class == seat&&e.Availability==true);
+            var chekSeat = _seat.GetOne(e => e.FlightId == trip.FlightId && e.Class == seat&&e.Availability==true);
             if (trip != null)
             {
                if(chekSeat != null)

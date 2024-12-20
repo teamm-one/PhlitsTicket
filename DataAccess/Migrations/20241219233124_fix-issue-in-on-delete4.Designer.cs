@@ -4,6 +4,7 @@ using DataAccess.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241219233124_fix-issue-in-on-delete4")]
+    partial class fixissueinondelete4
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -362,14 +365,9 @@ namespace DataAccess.Migrations
                     b.Property<int>("FlightID")
                         .HasColumnType("int");
 
-                    b.Property<int>("FlightId")
-                        .HasColumnType("int");
-
                     b.HasKey("SeatID");
 
                     b.HasIndex("FlightID");
-
-                    b.HasIndex("FlightId");
 
                     b.ToTable("Seats");
                 });
@@ -466,7 +464,7 @@ namespace DataAccess.Migrations
                     b.HasOne("Models.Models.Airline", "Airline")
                         .WithMany("AirlineFlights")
                         .HasForeignKey("AirlineId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Models.Models.Flight", "Flight")
@@ -485,13 +483,13 @@ namespace DataAccess.Migrations
                     b.HasOne("Models.Models.Airport", "AirPortArrive")
                         .WithMany("AirlineArrives")
                         .HasForeignKey("AirPortArriveId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Models.Models.Airport", "AirPortLeave")
                         .WithMany("AirlineLeaves")
                         .HasForeignKey("AirportLeaveId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("AirPortArrive");
@@ -532,15 +530,9 @@ namespace DataAccess.Migrations
 
             modelBuilder.Entity("Models.Models.Seat", b =>
                 {
-                    b.HasOne("Models.Models.Flight", null)
+                    b.HasOne("Models.Models.Flight", "Flight")
                         .WithMany("Seats")
                         .HasForeignKey("FlightID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Models.Models.Flight", "Flight")
-                        .WithMany()
-                        .HasForeignKey("FlightId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

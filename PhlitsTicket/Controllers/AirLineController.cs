@@ -7,7 +7,7 @@ using Utility;
 
 namespace PhlitsTicket.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = StaticData.Admin)]
     public class AirLineController : Controller
     {
         AirLineIRepo airline;
@@ -21,14 +21,12 @@ namespace PhlitsTicket.Controllers
         {
             return View(airline.GetAll(includes: [e => e.AirPortArrive, e => e.AirPortLeave]).ToList());
         }
-        [Authorize(Roles = StaticData.Admin)]
         public IActionResult Create()
         {
             var airports = airPort.GetAll().ToList();
             ViewData["Airports"] = airports;
             return View();
         }
-        [Authorize(Roles = StaticData.Admin)]
         [HttpPost]
         public IActionResult Create(AirlineVM airlineVM)
         {
@@ -44,7 +42,6 @@ namespace PhlitsTicket.Controllers
             }
             return View(airlineVM);
         }
-        [Authorize(Roles = StaticData.Admin)]
         public IActionResult Edit(int id)
         {
             var airlinee = airline.GetOne(e => e.AirlineId == id);
@@ -60,7 +57,6 @@ namespace PhlitsTicket.Controllers
             airlineVM.AirPortArriveId = airlinee.AirPortArriveId;
             return View(airlineVM);
         }
-        [Authorize(Roles = StaticData.Admin)]
         [HttpPost]
         public IActionResult Edit(AirlineVM airlineVM, int id)
         {
@@ -79,7 +75,6 @@ namespace PhlitsTicket.Controllers
             }
             return View(airlineVM);
         }
-        [Authorize(Roles = StaticData.Admin)]
         public IActionResult Delete(int id)
         {
             airline.Delete(id);

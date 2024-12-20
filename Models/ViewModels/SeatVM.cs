@@ -11,9 +11,9 @@ namespace Models.ViewModels
     public class SeatVM
     {
         [AllowNull]
-        public int SeatID { get; set; }
+        public int SeatId { get; set; }
         public string Class { get; set; }
         public bool Availability { get; set; }
-        public int FlightID { get; set; }
+        public int FlightId { get; set; }
     }
 }

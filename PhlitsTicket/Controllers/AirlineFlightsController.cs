@@ -7,7 +7,8 @@ using Utility;
 
 namespace PhlitsTicket.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = StaticData.Admin)]
+
     public class AirlineFlightsController : Controller
     {
         AirLineFlightsIRepo _airlineFlights;
@@ -26,14 +27,12 @@ namespace PhlitsTicket.Controllers
             var models = _airlineFlights.GetAll(includes: [e => e.Airline, e => e.Flight]).ToList();
             return View(models);
         }
-        [Authorize(Roles = StaticData.Admin)]
         public IActionResult Create()
         {
             ViewData["airlines"] = _ailine.GetAll().ToList();
             ViewData["flights"] = _flight.GetAll().ToList();
             return View();
         }
-        [Authorize(Roles = StaticData.Admin)]
         [HttpPost]
         public IActionResult Create(AirLineFlightsVM airLineFlights)
         {
@@ -60,7 +59,6 @@ namespace PhlitsTicket.Controllers
             ViewData["flights"] = _flight.GetAll().ToList();
             return View(airLineFlights);
         }
-        [Authorize(Roles = StaticData.Admin)]
         public IActionResult Delete(int lineId, int flightId)
         {
             var air = _airlineFlights.GetOne((e => e.AirlineId == lineId & e.FlightId == flightId));
@@ -72,7 +70,6 @@ namespace PhlitsTicket.Controllers
             }
             return RedirectToAction("Index");
         }
-        [Authorize(Roles = StaticData.Admin)]
         public IActionResult Edit(int lineId, int flightId)
         {
             var air = _airlineFlights.GetOne((e => e.AirlineId == lineId & e.FlightId == flightId));
@@ -89,7 +86,6 @@ namespace PhlitsTicket.Controllers
             }
             return RedirectToAction("Index");
         }
-        [Authorize(Roles = StaticData.Admin)]
         [HttpPost]
         public IActionResult Edit(AirLineFlightsVM airLineFlightsVM, int lastFlightId, int lastAirId)
         {

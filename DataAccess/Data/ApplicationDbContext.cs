@@ -22,46 +22,39 @@ namespace DataAccess.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            // تعيين المفتاح المركب بين AirlineId و FlightId في AirLineFlights
             modelBuilder.Entity<AirLineFlights>()
                 .HasKey(e => new { e.AirlineId, e.FlightId });
 
-            // العلاقة بين Airline و AirPortLeave (مغادرة)
             modelBuilder.Entity<Airline>()
                 .HasOne(a => a.AirPortLeave)
-                .WithMany(a => a.AirlineLeaves)  // تعيين الخاصية المناسبة في Airport
+                .WithMany(a => a.AirlineLeaves)
                 .HasForeignKey(a => a.AirportLeaveId)
-                .OnDelete(DeleteBehavior.NoAction); // لا نقوم بحذف البيانات المرتبطة عند حذف الطيران
+                .OnDelete(DeleteBehavior.NoAction);
 
-            // العلاقة بين Airline و AirPortArrive (وصول)
             modelBuilder.Entity<Airline>()
                 .HasOne(a => a.AirPortArrive)
-                .WithMany(a => a.AirlineArrives)  // تعيين الخاصية المناسبة في Airport
+                .WithMany(a => a.AirlineArrives)
                 .HasForeignKey(a => a.AirPortArriveId)
-                .OnDelete(DeleteBehavior.NoAction); // لا نقوم بحذف البيانات المرتبطة عند حذف الطيران
+                .OnDelete(DeleteBehavior.NoAction);
 
-            // العلاقة بين Airline و AirLineFlights
             modelBuilder.Entity<Airline>()
                 .HasMany(a => a.AirlineFlights)
                 .WithOne(af => af.Airline)
                 .HasForeignKey(af => af.AirlineId)
-                .OnDelete(DeleteBehavior.NoAction); // لا نقوم بحذف البيانات المرتبطة عند حذف الطيران
+                .OnDelete(DeleteBehavior.NoAction);
 
-            // العلاقة بين Flight و AirLineFlights
             modelBuilder.Entity<Flight>()
                 .HasMany(f => f.AirLineFlights)
                 .WithOne(af => af.Flight)
                 .HasForeignKey(af => af.FlightId)
-                .OnDelete(DeleteBehavior.NoAction);
+                .OnDelete(DeleteBehavior.Cascade);
 
-            // العلاقة بين Booking و ApplicationUser
             modelBuilder.Entity<Booking>()
                 .HasOne(b => b.ApplicationUser)
                 .WithMany()
                 .HasForeignKey(b => b.ApplicationUserId)
                 .OnDelete(DeleteBehavior.NoAction);
 
-            // العلاقة بين Booking و Seat
             modelBuilder.Entity<Booking>()
                 .HasOne(b => b.Seat)
                 .WithMany()

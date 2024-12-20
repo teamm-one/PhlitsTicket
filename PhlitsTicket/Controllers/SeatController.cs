@@ -7,7 +7,8 @@ using Utility;
 
 namespace PhlitsTicket.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = StaticData.Admin)]
+
     public class SeatController : Controller
     {
         SeatIRepo _seat;
@@ -22,19 +23,17 @@ namespace PhlitsTicket.Controllers
         {
             return View(_seat.GetAll(includes: [e => e.Flight]).ToList());
         }
-        [Authorize(Roles = StaticData.Admin)]
         public IActionResult Create()
         {
             ViewData["Flights"] = _flight.GetAll().ToList();
             return View();
         }
-        [Authorize(Roles = StaticData.Admin)]
         [HttpPost]
         public IActionResult Create(SeatVM seatVM)
         {
             if (ModelState.IsValid)
             {
-                var model = new Seat { Class = seatVM.Class, FlightID = seatVM.FlightID, Availability = seatVM.Availability };
+                var model = new Seat { Class = seatVM.Class, FlightId = seatVM.FlightId, Availability = seatVM.Availability };
                 _seat.Create(model);
                 _seat.commit();
                 return RedirectToAction("Index");
@@ -50,7 +49,6 @@ namespace PhlitsTicket.Controllers
             }
             return RedirectToAction("Index");
         }
-        [Authorize(Roles = StaticData.Admin)]
         public IActionResult Edit(int id)
         {
             var seat = _seat.GetOne(e => e.SeatID == id, includes: [e => e.Flight]);
@@ -61,18 +59,17 @@ namespace PhlitsTicket.Controllers
             }
             return RedirectToAction("Index");
         }
-        [Authorize(Roles = StaticData.Admin)]
         [HttpPost]
         public IActionResult Edit(SeatVM seatVM)
         {
             if (ModelState.IsValid)
             {
-                var seat = _seat.GetOne(e => e.SeatID == seatVM.SeatID);
+                var seat = _seat.GetOne(e => e.SeatID == seatVM.SeatId);
                 if (seat != null)
                 {
                     seat.Availability = seatVM.Availability;
                     seat.Class = seatVM.Class;
-                    seat.FlightID = seatVM.FlightID;
+                    seat.FlightId = seatVM.FlightId;
                     _seat.Edit(seat);
                     _seat.commit();
                     return RedirectToAction("Index");
@@ -80,7 +77,6 @@ namespace PhlitsTicket.Controllers
             }
             return View(seatVM);
         }
-        [Authorize(Roles = StaticData.Admin)]
         public IActionResult Delete(int id)
         {
             if (_seat.Delete(id))

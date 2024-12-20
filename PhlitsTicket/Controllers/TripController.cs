@@ -7,7 +7,8 @@ using Utility;
 
 namespace PhlitsTicket.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = StaticData.Admin)]
+
     public class TripController : Controller
     {
         TripIRepo _trip;
@@ -33,13 +34,11 @@ namespace PhlitsTicket.Controllers
             }
             return View(trips);
         }
-        [Authorize(Roles = StaticData.Admin)]
         public IActionResult Create()
         {
             ViewData["airlines"] = _airline.GetAll().ToList();
             return View();
         }
-        [Authorize(Roles = StaticData.Admin)]
         public IActionResult SelectFlight(TripDataVM trip)
         {
             if (ModelState.IsValid)
@@ -53,7 +52,6 @@ namespace PhlitsTicket.Controllers
             }
             return RedirectToAction("Create");
         }
-        [Authorize(Roles = StaticData.Admin)]
         [HttpPost]
         public IActionResult Create(TripVM tripVM)
         {
@@ -81,8 +79,6 @@ namespace PhlitsTicket.Controllers
                 return View(trip);
             return RedirectToAction("Index");
         }
-        [Authorize(Roles = StaticData.Admin)]
-
         public IActionResult Edit(int id)
         {
             var trip = _trip.GetOne(e => e.TripId == id, includes: [e => e.Airline, e => e.Flight]);
@@ -90,7 +86,6 @@ namespace PhlitsTicket.Controllers
                 return View(trip);
             return RedirectToAction("Index");
         }
-        [Authorize(Roles = StaticData.Admin)]
         [HttpPost]
         public IActionResult Edit(TripEditVM trip)
         {
@@ -112,7 +107,6 @@ namespace PhlitsTicket.Controllers
             }
             return View(trip);
         }
-        [Authorize(Roles = StaticData.Admin)]
         public IActionResult Delete(int id)
         {
             try
